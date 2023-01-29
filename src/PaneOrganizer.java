@@ -23,6 +23,7 @@ public class PaneOrganizer{
     private int rightNum;
     private Pane bpmEntry;
     private Label beatText;
+    private Label welcome;
 
     public PaneOrganizer(){
         this.bPM=0;
@@ -41,11 +42,25 @@ public class PaneOrganizer{
                 BackgroundRepeat.NO_REPEAT,
                 BackgroundPosition.DEFAULT,
                 BackgroundSize.DEFAULT);
+        Image campfire = new Image("https://clipartix.com/wp-content/uploads/2017/12/Campfire-clip-art-2.jpg");
+        BackgroundSize size = new BackgroundSize(0.5, 0.5, true, true, false, false);
+        BackgroundImage campfireBG = new BackgroundImage(campfire, BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.CENTER,
+                size);
         this.white = new Background(wImg);
-        this.root.setBackground(white);
+        this.root.setBackground(new Background(campfireBG));
+        this.welcome = new Label("Campfire Metronome");
+        //this.welcome.setPrefSize(50, 50);
+        /*this.welcome.setLayoutX(150);
+        this.welcome.setLayoutY(50);
+        this.welcome.setTextFill(Color.BLACK);
+        this.welcome.toFront();
+        this.root.getChildren().add(this.welcome);*/
     }
 
     private void setNorm(){
+        this.root.setBackground(this.white);
         this.bpmEntry = new Pane();
         this.root.setCenter(this.bpmEntry);
         TextField beatsPer = new TextField();
@@ -131,8 +146,14 @@ public class PaneOrganizer{
                 this.rightNum = Integer.parseInt(rightBeats.getText());
             }
             this.setUpTimelinePoly(left, right, this.leftNum, this.rightNum);
-            this.flashPoly(left);
-            this.flashPoly(right);
+            left.setFill(Color.WHITE);
+            right.setFill(Color.WHITE);
+
+            this.bpmEntry.getChildren().remove(this.beatText);
+            this.bpmEntry.getChildren().add(this.beatText);
+            this.beatText.setLayoutX(150);
+            this.beatText.setLayoutY(232.5);
+            this.beatText.setTextFill(Color.WHITE);
             this.timeline.play();
             this.timeline2.play();
             this.timeline3.play();
